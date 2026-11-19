@@ -1,22 +1,22 @@
-# Static validation report
+# Validation report for repaired package
 
-Checks performed while preparing this package:
+Checks performed on this package:
 
-- JavaScript syntax checked with Node.js `--check`.
-- PWA manifest parsed as valid JSON.
-- Android manifest parsed as valid XML.
-- Web app and Android bundled `index.html` checked for byte-for-byte equality.
-- Required PWA assets referenced by the service worker checked for existence.
-- ZIP archive integrity checked after packaging.
+- Original ZIP archive integrity checked before extraction.
+- Web app HTML retained; duplicate supplied HTML copy retained.
+- PWA icon and brand-art assets copied into the `assets/` directory expected by `index.html`, `manifest.webmanifest` and `service-worker.js`.
+- Service-worker cache key incremented to `jalal-expense-v4` so previously cached broken paths are not reused.
+- Android source reorganized into a standard `android/app/src/main/` project layout; app Gradle configuration, manifest, Java activity, HTML asset and app icon are in their expected locations.
+- JavaScript syntax, manifest JSON, Android manifest XML, referenced PWA asset existence and ZIP integrity checked after packaging.
 
 Not verified in this environment:
 
-- Full interactive browser testing across desktop/mobile browsers.
-- Live GitHub Pages deployment and install/offline behavior on a physical phone.
-- Android Gradle sync, emulator/device execution, or APK compilation. No APK is included.
+- Full interactive testing in desktop/mobile browsers or on a physical Android phone.
+- Live GitHub Pages deployment and actual PWA installation/offline behavior.
+- Android Gradle sync, emulator/device execution or APK compilation. No APK is included.
 
-Known product limitations:
+Known limitations retained from the supplied app:
 
 - Urdu mode currently provides RTL layout and a translated welcome greeting; most interface strings remain English.
 - PIN is a local convenience lock, not encryption.
-- Data remains on the current device/browser unless the user exports and manually transfers a backup.
+- Data remains on the current device/browser unless manually backed up and transferred.
