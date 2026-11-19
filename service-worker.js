@@ -1,4 +1,4 @@
-const CACHE='jalal-expense-v3';
+const CACHE='jalal-expense-v4';
 const ASSETS=[
   './index.html',
   './manifest.webmanifest',
