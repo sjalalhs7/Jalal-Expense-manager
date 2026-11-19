@@ -1,38 +1,53 @@
 # Jalal Expense Manager
 
-A mobile-first, offline-capable personal expense tracker branded with the supplied Jalal logo and icon.
+A mobile-first personal expense tracker branded with the supplied Jalal artwork. The web app stores records locally on the device/browser; it does not require an account or backend.
 
 ## Features
-- Add, edit and delete expense records (PKR)
-- Record and delete income
+
+- Add, edit and delete expense records in PKR (Rs.)
+- Record income and remove income entries
 - Today, current-week, selected-month and selected-year summaries
 - Daily, weekly, monthly and yearly reports with category breakdowns and charts
 - Monthly budget, budget progress and net balance (income minus expenses)
 - Search and filter expenses by category and month
 - JSON backup and restore
 - Optional 4–8 digit PIN convenience lock
-- English / Urdu direction toggle
-- PWA manifest and service worker for offline use after first load
-- Android Studio WebView wrapper with local backup export/import support
+- English interface; Urdu option currently changes the layout direction (RTL) and welcome greeting only. Most labels and report text remain English.
+- PWA manifest and service worker for offline use after the first successful load
+- Android Studio WebView source project with local JSON backup export/import bridge
 
 ## Run as a web app
-Open `index.html` in a browser. For install/offline PWA behavior, serve the folder over HTTPS or localhost, then use the browser's **Install app** / **Add to Home Screen** option. GitHub Pages can host this static project.
 
-## Android Studio project
-Open the `android/` folder in Android Studio, allow Gradle sync, then select **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
-- Package: `com.jalal.expensemanager`
+1. Upload the **contents of this folder** to the root of your GitHub repository (so `index.html` is at the repository root).
+2. In GitHub, open **Settings → Pages**.
+3. Choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
+4. Open the published HTTPS site on your phone. Use the browser menu → **Add to Home screen** / **Install app**.
+
+For local testing, serve this folder over localhost (for example, with VS Code Live Server). Opening `index.html` directly with `file://` does not enable PWA installation or service-worker offline caching.
+
+## Android Studio source
+
+Open the `android/` folder in Android Studio and allow it to configure/sync the project. The source uses:
+
+- Application ID: `com.jalal.expensemanager`
 - Minimum Android: API 23
 - Compile SDK: 35
-- App launcher icon: supplied Jalal Expense Manager artwork
+- Android Gradle Plugin: 8.7.3
 
-Android Studio may need Android SDK 35 and a compatible Gradle JDK. The wrapper loads the bundled `index.html` from app assets and stores data locally on the device.
+Android Studio may ask to install Android SDK 35 and a compatible Gradle/JDK setup. Then use **Build → Build Bundle(s) / APK(s) → Build APK(s)**. This package contains Android source, not a prebuilt APK. A Gradle wrapper is not included, so Android Studio may ask you to configure or generate the wrapper / use a locally installed Gradle version before syncing.
 
-## Privacy and data safety
-All expense and income records are stored locally in browser/app storage. No account or cloud server is used. Export JSON backups regularly. Clearing browser/app storage or uninstalling the Android app can erase local records. The PIN is a convenience lock, not encryption; do not treat it as bank-grade security. Keep backups in a secure location.
+## Data and security notes
+
+- Expense, income, budget and settings data are stored in local browser/app storage. Clearing site/app storage or uninstalling the Android app can erase the records.
+- Export JSON backups regularly and keep them somewhere safe. Restoring a backup replaces the current app data.
+- The PIN is stored locally as a convenience lock; it is **not encryption** and is not suitable for protecting sensitive financial records from a technically capable attacker.
+- The app does not sync records between devices.
 
 ## Project structure
-- `index.html` — app interface and logic
-- `assets/` — supplied brand artwork and PWA icons
-- `manifest.webmanifest` — PWA metadata
+
+- `index.html` — web app interface and logic
+- `assets/` — logo and PWA icons
+- `manifest.webmanifest` — install metadata
 - `service-worker.js` — offline app-shell cache
-- `android/` — Android Studio WebView project
+- `android/` — Android Studio WebView source project
+- `TEST-REPORT.md` — checks performed and limitations
