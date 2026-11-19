@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import java.io.OutputStream;
-import java.io.InputStream;
 
 public class MainActivity extends Activity {
     private static final int PICK_BACKUP_FILE = 4101;
@@ -25,7 +24,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         webView = new WebView(this);
         setContentView(webView);
-
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -33,8 +31,7 @@ public class MainActivity extends Activity {
         settings.setAllowContentAccess(true);
 
         webView.addJavascriptInterface(new Object() {
-            @JavascriptInterface
-            public void saveBackup(String json) {
+            @JavascriptInterface public void saveBackup(String json) {
                 runOnUiThread(() -> {
                     pendingBackupJson = json;
                     Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -48,9 +45,8 @@ public class MainActivity extends Activity {
 
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback,
-                    FileChooserParams params) {
+            @Override public boolean onShowFileChooser(WebView view,
+                    ValueCallback<Uri[]> callback, FileChooserParams params) {
                 if (fileCallback != null) fileCallback.onReceiveValue(null);
                 fileCallback = callback;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -67,7 +63,7 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, result);
         if (requestCode == PICK_BACKUP_FILE) {
             if (fileCallback != null) {
-                Uri[] uris = (resultCode == RESULT_OK && result != null && result.getData() != null)
+                Uri[] uris = resultCode == RESULT_OK && result != null && result.getData() != null
                         ? new Uri[]{result.getData()} : null;
                 fileCallback.onReceiveValue(uris);
                 fileCallback = null;
