@@ -1,0 +1,2 @@
+Copy the existing repository-root index.html into this folder as index.html.
+Do not use this text file as the app page. MainActivity loads file:///android_asset/index.html.

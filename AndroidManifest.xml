@@ -2,7 +2,7 @@
     <application
         android:allowBackup="false"
         android:label="Jalal Expense Manager"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"

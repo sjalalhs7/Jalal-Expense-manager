@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends Activity {
     private static final int PICK_BACKUP_FILE = 4101;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         webView = new WebView(this);
         setContentView(webView);
+
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -52,10 +54,15 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("application/json");
-                startActivityForResult(Intent.createChooser(intent, "Select expense backup"), PICK_BACKUP_FILE);
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select expense backup"),
+                    PICK_BACKUP_FILE
+                );
                 return true;
             }
         });
+
+        // Copy the repository's existing index.html into this exact assets path.
         webView.loadUrl("file:///android_asset/index.html");
     }
 
@@ -64,15 +71,16 @@ public class MainActivity extends Activity {
         if (requestCode == PICK_BACKUP_FILE) {
             if (fileCallback != null) {
                 Uri[] uris = resultCode == RESULT_OK && result != null && result.getData() != null
-                        ? new Uri[]{result.getData()} : null;
+                    ? new Uri[]{result.getData()} : null;
                 fileCallback.onReceiveValue(uris);
                 fileCallback = null;
             }
         } else if (requestCode == SAVE_BACKUP_FILE) {
-            if (resultCode == RESULT_OK && result != null && result.getData() != null && pendingBackupJson != null) {
+            if (resultCode == RESULT_OK && result != null && result.getData() != null
+                    && pendingBackupJson != null) {
                 try (OutputStream out = getContentResolver().openOutputStream(result.getData())) {
                     if (out != null) {
-                        out.write(pendingBackupJson.getBytes("UTF-8"));
+                        out.write(pendingBackupJson.getBytes(StandardCharsets.UTF_8));
                         Toast.makeText(this, "Backup saved", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {

@@ -1,0 +1,6 @@
+Copy (do not move) the three original PNG files from the repository root into this folder using these exact names:
+icon-192.png
+icon-512.png
+brand-logo.png
+
+The current web app and PWA manifest/service worker expect these paths.

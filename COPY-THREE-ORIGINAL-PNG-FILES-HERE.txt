@@ -1,0 +1,1 @@
+Copy the existing root icon-192.png, icon-512.png and brand-logo.png into this folder. Do not move or delete the originals.
