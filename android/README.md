@@ -16,4 +16,4 @@ Open this `android/` directory in Android Studio. Use JDK 17 and install Android
 Records remain in WebView local storage on this device. They are not uploaded to a server. Export JSON backups regularly. The optional app PIN is not encryption.
 
 ## Verification status
-Source structure is supplied. An APK build and physical-device test have not yet been run; do not treat this repository as a signed release APK.
+GitHub Actions builds `app-debug.apk` on Android source changes. Download the `Jalal-Expense-Manager-debug-apk` artifact from a successful **Build Android APK** run. This is a debug APK for testing, not a production-signed release. Physical-device testing is still required.
