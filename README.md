@@ -12,7 +12,7 @@ Serve the repository over HTTPS (for example, GitHub Pages) to enable PWA instal
 
 Open the `android/` directory in Android Studio. Use JDK 17 and install Android SDK Platform 35 when prompted. Android Studio can create/sync the Gradle wrapper. The Android project loads the same web app from `android/app/src/main/assets/index.html`.
 
-This repository contains Android source code, not a built or signed APK. APK compilation and physical-device testing are still required before release.
+GitHub Actions now builds a debug APK automatically when Android source changes are pushed to `main`. Open the repository's Actions tab, select **Build Android APK**, open a successful run, and download the `Jalal-Expense-Manager-debug-apk` artifact. The APK is debug-signed for testing; a production release still needs a properly protected release-signing key and physical-device testing.
 
 ## Data, privacy and limitations
 
