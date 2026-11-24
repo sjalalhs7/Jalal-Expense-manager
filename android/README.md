@@ -1,19 +1,16 @@
-# Jalal Expense Manager — Android source
+# Android release notes
 
-This is an Android Studio source project wrapping the existing web app in a WebView.
+This Android Studio project wraps the existing offline-first expense app in a WebView.
 
-## Open
-Open this `android/` directory in Android Studio. Use JDK 17 and install Android SDK Platform 35 when prompted. Android Studio can generate/sync the Gradle wrapper for the project.
+- Package: `com.jalal.expensemanager`
+- minSdk 23; targetSdk / compileSdk 36
+- Release version 1.1.0 (versionCode 3)
+- Uses JDK 17, Gradle 8.11.1 and Android Gradle Plugin 8.9.1.
 
-## Included
-- App ID: `com.jalal.expensemanager`
-- Minimum Android: API 23
-- Target/compile SDK: 35
-- Offline local HTML app at `app/src/main/assets/index.html`
-- Backup export/import through Android document picker
+## Privacy
 
-## Data and privacy
-Records remain in WebView local storage on this device. They are not uploaded to a server. Export JSON backups regularly. The optional app PIN is not encryption.
+Expense records stay in WebView local storage on the device. No internet permission, cloud sync, analytics or ad SDK is included. Export JSON backups regularly. The optional PIN is stored locally and is only a convenience lock, not encryption.
 
-## Verification status
-GitHub Actions builds `app-debug.apk` on Android source changes. Download the `Jalal-Expense-Manager-debug-apk` artifact from a successful **Build Android APK** run. This is a debug APK for testing, not a production-signed release. Physical-device testing is still required.
+## Play Store signing
+
+The debug APK is only for sideload testing. The release AAB must be signed with a persistent upload key. Store that key outside Git and configure the four GitHub Actions secrets documented in the root README. Enroll the app in Google Play App Signing in Play Console.
