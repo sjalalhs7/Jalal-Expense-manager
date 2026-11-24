@@ -37,7 +37,16 @@ jobs:
       - name: Build debug APK
         run: gradle --no-daemon -p android assembleDebug
 
-      - name: Upload installable debug APK
+      - name: Verify APK signature and report checksum
+        run: |
+          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          APKSIGNER="$(find "$SDK_ROOT/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          test -n "$APKSIGNER" && test -x "$APKSIGNER"
+          "$APKSIGNER" verify --verbose --print-certs "$APK"
+          sha256sum "$APK"
+
+      - name: Upload verified debug APK
         uses: actions/upload-artifact@v4
         with:
           name: Jalal-Expense-Manager-debug-apk
