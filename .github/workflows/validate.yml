@@ -18,3 +18,5 @@ jobs:
           node-version: 22
       - name: Validate web app and PWA files
         run: node scripts/validate.mjs
+      - name: Test expense and income validation rules
+        run: node scripts/test-app.mjs
