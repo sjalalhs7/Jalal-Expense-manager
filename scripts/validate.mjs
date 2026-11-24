@@ -28,6 +28,13 @@ for (const icon of manifest.icons ?? []) {
 }
 
 const html = readFileSync('index.html', 'utf8');
+const androidHtml = readFileSync('android/app/src/main/assets/index.html', 'utf8');
+if (androidHtml !== html) {
+  throw new Error('Android bundled app is out of sync with the root web app.');
+}
+for (const marker of ['function validExpense(', 'function validIncome(', 'function validDate(', '!x.expenses.every(validExpense)', '!x.income.every(validIncome)']) {
+  if (!html.includes(marker)) throw new Error('Missing data validation safeguard: ' + marker);
+}
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)];
 if (!scripts.length) throw new Error('No inline application script found.');
 for (let i = 0; i < scripts.length; i++) {
@@ -40,4 +47,4 @@ for (let i = 0; i < scripts.length; i++) {
   }
 }
 execFileSync(process.execPath, ['--check', 'service-worker.js'], { stdio: 'inherit' });
-console.log('Validation passed: required files, PWA icons, manifest JSON and JavaScript syntax.');
+console.log('Validation passed: required files, PWA icons, manifest JSON, synchronized Android app, data-import safeguards and JavaScript syntax.');
