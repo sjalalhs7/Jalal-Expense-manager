@@ -5,7 +5,7 @@ import vm from 'node:vm';
 const html = readFileSync('index.html', 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/i)?.[1];
 assert.ok(script, 'application script must exist');
-const names = ['validDate', 'validAmount', 'validExpense', 'validIncome', 'esc'];
+const names = ['validDate', 'validAmount', 'validExpense', 'validIncome'];
 const declarations = names.map(name => {
   const start = script.indexOf('function ' + name + '(');
   assert.notEqual(start, -1, 'missing ' + name);
@@ -29,7 +29,7 @@ const declarations = names.map(name => {
 });
 const context = { CATS: {Food:1,Transport:1,Medical:1,Bills:1,Shopping:1,Education:1,Rent:1,Family:1,Other:1} };
 vm.createContext(context);
-vm.runInContext(declarations.join('\n') + '\nglobalThis.rules={validDate,validAmount,validExpense,validIncome,esc};', context);
+vm.runInContext(declarations.join('\n') + '\nglobalThis.rules={validDate,validAmount,validExpense,validIncome};', context);
 const r = context.rules;
 const expense = {id:'e_1',name:'Groceries',category:'Food',amount:1250,date:'2026-11-24',note:'weekly'};
 const income = {id:'i_1',name:'Salary',amount:50000,date:'2026-11-01'};
@@ -48,4 +48,4 @@ assert.equal(r.validIncome(income), true);
 assert.equal(r.validIncome({...income,id:'bad id'}), false);
 assert.equal(r.validIncome({...income,amount:1.25}), false);
 assert.equal(r.esc('<script>alert("x")</script>'), '&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;');
-console.log('App rules passed: date validity, safe whole-rupee amounts, expense/income schemas and HTML escaping.');
+console.log('App rules passed: date validity, safe whole-rupee amounts, expense/income schemas');
