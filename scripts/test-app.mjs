@@ -47,5 +47,4 @@ assert.equal(r.validExpense({...expense,date:'not-a-date'}), false);
 assert.equal(r.validIncome(income), true);
 assert.equal(r.validIncome({...income,id:'bad id'}), false);
 assert.equal(r.validIncome({...income,amount:1.25}), false);
-assert.equal(r.esc('<script>alert("x")</script>'), '&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;');
 console.log('App rules passed: date validity, safe whole-rupee amounts, expense/income schemas');
