@@ -32,7 +32,7 @@ const androidHtml = readFileSync('android/app/src/main/assets/index.html', 'utf8
 if (androidHtml !== html) {
   throw new Error('Android bundled app is out of sync with the root web app.');
 }
-for (const marker of ['function validExpense(', 'function validIncome(', 'function validDate(', '!x.expenses.every(validExpense)', '!x.income.every(validIncome)']) {
+for (const marker of ['function validExpense(', 'function validAmount(', 'function validIncome(', 'function validDate(', '!x.expenses.every(validExpense)', '!x.income.every(validIncome)']) {
   if (!html.includes(marker)) throw new Error('Missing data validation safeguard: ' + marker);
 }
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)];
