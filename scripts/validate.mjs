@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 
 const required = [
   'index.html',
+  'scripts/test-app.mjs',
   'manifest.webmanifest',
   'service-worker.js',
   'assets/icon-192.png',
